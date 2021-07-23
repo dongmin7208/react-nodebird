@@ -62,3 +62,9 @@ npm trends - web site
 
 app.js는 완전 공통인애들
 레이아웃은 일부가 공통인애들
+
+`import Head from 'next/head';`
+헤드를 고치고싶을때 방법
+공통필요할때 Head 대문자로
+`import { Menu, Input, Row, Col } from "antd";`
+가로, 세로 그리드 추가!
