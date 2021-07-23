@@ -34,7 +34,13 @@ const AppLayout = ({ children }) => {
           {children}
         </Col>
         <Col xs={24} md={6}>
-          right menu
+          <a
+            href="https://github.com/dongmin7208"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Made by Dongmin
+          </a>
         </Col>
       </Row>
     </div>

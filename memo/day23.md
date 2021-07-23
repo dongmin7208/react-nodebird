@@ -68,3 +68,19 @@ app.js는 완전 공통인애들
 공통필요할때 Head 대문자로
 `import { Menu, Input, Row, Col } from "antd";`
 가로, 세로 그리드 추가!
+반응형할때
+모바일디자인 > 태블릿 > 데스크탑 순으로 만들어야함!
+데스크탑 순으로 하면 브레이크포인트 설정이 힘들다.
+
+```
+가로 먼저 쫙쫙 짜르고
+세로로 쫙쫙 짜른다.
+```
+
+Row col
+`https://ant.design/components/grid/`
+일부러 특정 공간을 띄우는 offset 컬럼도 있음.
+
+gutter = 컬럼사이의 간격
+24는 나누기 좋은 숫자라 24로 함 맨밑에 있음.
+`https://ant.design/components/grid/`
