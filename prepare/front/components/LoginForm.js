@@ -7,20 +7,29 @@ const ButtonWrapper = styled.div`
   margin-top: 10px;
 `;
 
-const LoginForm = () => {
+const FormWrapper = styled(Form)`
+  padding: 10px;
+`;
+
+const LoginForm = ({ setIsLoggedIn }) => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
   const onChangeId = useCallback((e) => {
     setId(e.target.value);
   }, []);
+
   const onChangePassword = useCallback((e) => {
     setPassword(e.target.value);
   }, []);
 
-  const style = useMemo(() => ({ marginTop: 10 }), []);
+  const onSubmitForm = useCallback(() => {
+    console.log(id, password);
+    setIsLoggedIn(true);
+  }, [id, password]);
+
   return (
-    <Form>
+    <FormWrapper onFinish={onSubmitForm}>
       <div>
         <label htmlFor="user-id">ID</label>
         <br />
@@ -47,7 +56,7 @@ const LoginForm = () => {
           </a>
         </Link>
       </ButtonWrapper>
-    </Form>
+    </FormWrapper>
   );
 };
 export default LoginForm;
