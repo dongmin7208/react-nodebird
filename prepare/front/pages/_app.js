@@ -1,11 +1,16 @@
 import React from "react";
 import "antd/dist/antd.css";
 import PropTypes from "prop-types";
+import Head from "next/head";
 
 const NodeBird = ({ Component }) => {
   return (
     <>
-      <div>공통메뉴23</div>
+      {/* <div>공통메뉴23</div> */}
+      <Head>
+        <meta charSet="utf-8" />
+        <title>NodeBird</title>
+      </Head>
       <Component />
     </>
   );
