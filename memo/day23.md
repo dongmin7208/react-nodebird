@@ -84,3 +84,24 @@ Row col
 gutter = 컬럼사이의 간격
 24는 나누기 좋은 숫자라 24로 함 맨밑에 있음.
 `https://ant.design/components/grid/`
+
+taget:\_blank 새창 띄우기할때 보안문제때문에
+`target="_blank" rel="noreferrer noopener"`
+같이해줘야함.
+
+로그인 기능만들고싶은데 데이터 없을때
+더미 데이터 사용하기!
+
+```
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    {isLoggedIn ? <UserProfile /> : <LoginForm />}
+```
+
+가짜 데이터 만들기
+
+components 순수하게 화면보여주는 폴더
+contains 데이터 다루는애들 폴더
+했었는데 hooks했는데
+구분하는거 추천하지않음. react공식에서
+
+div 안에다가 마진탑이니 값 주면안됨 리랜더링되기때문에
