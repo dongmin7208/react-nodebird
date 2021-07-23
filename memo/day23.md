@@ -22,7 +22,8 @@ AppLayout는 원하는대로 마음대로 만드는것
     npm i eslint-plugin-import -D
     npm i eslint-plugin-react -D
     npm i eslint-plugin-react-hooks -D
-``
+```
+
 코드 점검
 여러명의 코드 규칙을 정해주는것
 
@@ -31,4 +32,33 @@ AppLayout는 원하는대로 마음대로 만드는것
 리눅스에서나 맥에서는 숨김파일이 된다는 의미 앞에 .있는건
 
 eslint 설치가 끝이 아니라 vsc연동을 해줘야함
+DB SQL
+emotion,
+Styled Components
+npm trends - web site
+
+`npm i antd styled-components @ant-design/icons`
+
+설치 위치 잘못했는데
+설치했던 장소에서 그대로 npm uninstall -g npm i antd~
+하면 언인스톨됨 명령어 그대로!
+
 ```
++ @ant-design/icons@4.6.2
++ styled-components@5.3.0
++ antd@4.16.8
+
+```
+
+`import { Menu } from "antd";`
+`import 'antd/dist/antd.css';`
+
+`https://ant.design/docs/react/introduce`
+사용방법 doc
+
+`pages/`폴더내
+`_app.js`
+중복된 import 한번에 만들어줌
+
+app.js는 완전 공통인애들
+레이아웃은 일부가 공통인애들
