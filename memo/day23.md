@@ -123,3 +123,15 @@ const LoginForm =() => {
 
 리랜더링이된다고해서 리턴부분을 다 새로 그리는것 아니라
 리턴부분 중에서 조금(마진탑10) 이 부분만 다시 그리는것
+
+리덕스 모베스 써서 더미데이터써서 만듬
+
+크롬확장프로그램
+
+```
+React Developer Tools
+Redux DevTools
+MobX Developer Tools
+```
+
+설치완료
