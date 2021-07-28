@@ -69,3 +69,25 @@ import {useSelector} from "react-redux";
 ```
 
 switch문에는 꼭 넣어주자..........!!!!!!!
+
+```
+    const configureStore = () => {
+  const enhancer = process.env.NODE_ENV === 'production'
+  ? compose(applyMiddleware([]))
+  : compose(applyMiddleware([]))
+  const store = createStore(reducer, enhancer);
+  return store;
+};
+```
+
+하고난다음
+`npm i redux-devtools-extension`
+설치 해야됨 이게 있어야 브라우저확장이랑 연동이됨.
+
+개발용일때는
+import { composeWithDevTools } from "redux-devtools-extension";
+? compose(applyMiddleware([]))
+: compose(applyMiddleware([]));
+위에 줄을
+`: composeWithDevTools(applyMiddleware([]))`
+개발용으로 이렇게 바꿔줘야지 히스토리가 안쌓이기때문에 사용!
