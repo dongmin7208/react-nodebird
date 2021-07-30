@@ -2,9 +2,18 @@ import { createWrapper } from "next-redux-wrapper";
 import { applyMiddleware, compose, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducer from "../reducers";
+import thunkMiddleware from "redux-thunk";
+
+const loggerMiddleware =
+  ({ dispatch, getState }) =>
+  (next) =>
+  (action) => {
+    console.log(action);
+    return next(action);
+  };
 
 const configureStore = () => {
-  const middlewares = [];
+  const middlewares = [thunkMiddleware, loggerMiddleware]; //applyMiddleware의 인자로 들어감.
   const enhancer =
     process.env.NODE_ENV === "production"
       ? compose(applyMiddleware(...middlewares))

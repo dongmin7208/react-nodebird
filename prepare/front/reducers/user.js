@@ -5,18 +5,14 @@ export const initialState = {
   loginData: {},
 };
 
-export const loginAction = (data) => {
-  return {
-    type: "LOG_IN",
-    data,
-  };
-};
+export const loginRequestAction = (data) => ({
+  type: LOG_IN_REQUEST,
+  data,
+});
 
-export const logoutAction = () => {
-  return {
-    type: "LOG_OUT",
-  };
-};
+export const logoutRequestAction = () => ({
+  type: LOG_OUT_REQUEST,
+});
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
