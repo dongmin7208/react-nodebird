@@ -1,7 +1,23 @@
+import { Button, Card } from "antd";
 import React from "react";
-
-const PostCard = () => {
-  return <div>PostCard</div>;
+import {RetweetOutlined} from '@ant-design';
+const PostCard = ({post}) => {
+  return (
+    <div>
+      <Card
+        cover={post.Image[0] && <PostImages images={post.images} />}
+        actions={[
+            <RetweetOutlined
+        ]}
+        >
+        <Image />
+        <Content />
+        <Button></Button>
+      </Card>
+      <CommentForm/>
+      <Comments />
+    </div>
+  );
 };
 
 export default PostCard;
