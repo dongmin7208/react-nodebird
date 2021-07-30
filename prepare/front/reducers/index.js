@@ -1,27 +1,14 @@
 import { HYDRATE } from "next-redux-wrapper";
+
+import user from "./user";
+import post from "./post";
+import { combineReducers } from "redux";
+
 const initialState = {
-  user: {
-    isLoggedIn: false,
-    user: null,
-    signUpData: {},
-    loginData: {},
-  },
-  post: {
-    mainPosts: [],
-  },
-};
-export const loginAction = (data) => {
-  return {
-    type: "LOG_IN",
-    data,
-  };
+  user: {},
+  post: {},
 };
 
-export const logoutAction = () => {
-  return {
-    type: "LOG_OUT",
-  };
-};
 // const initalState = {
 //   name: "zerocho",
 //   age: 27,
@@ -53,32 +40,18 @@ export const logoutAction = () => {
 // store.dispatch(changeNickname("mighty tak"));
 
 //(이전상태,액션을 통해서) => 다음상태를 만드는거
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case HYDRATE:
-      console.log("HYDRATE", action);
-      return { ...state, ...action.payload };
-    case "LOG_IN":
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          isLoggedIn: true,
-          user: action.data,
-        },
-      };
-    case "LOG_OUT":
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          isLoggedIn: false,
-          user: null,
-        },
-      };
-    default:
-      return state;
-  }
-};
+const rootReducer = combineReducers({
+  index: (state = {}, action) => {
+    switch (action.type) {
+      case HYDRATE:
+        console.log("HYDRATE", action);
+        return { ...state, ...action.payload };
+      default:
+        return state;
+    }
+  },
+  user,
+  post,
+});
 
 export default rootReducer;
