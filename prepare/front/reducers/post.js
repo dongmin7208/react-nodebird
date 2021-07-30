@@ -6,7 +6,7 @@ export const initialState = {
         id: 1,
         nickname: "dondon",
       },
-      content: "first board , #ハッシュタグ　＃パク",
+      content: "first board , #ハッシュタグ ,＃パク",
       Images: [
         {
           src: "https://images.unsplash.com/photo-1627563178037-3c05aa117c26?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=925&q=80",
