@@ -80,3 +80,14 @@ const onToggleLike = useCallback(() => {
 ```
 
 true false 전환
+
+프론트개발자는 백엔드개발자한테 데이터구조는 어떻게 되는지 미리 알아놔야함.
+
+form 만들때 라이브러리
+react-hook-form 추천
+
+props는 말 그대로 다양한 값을 받을수있고,
+useSelector는 하나의 값만 고정으로 받는것
+
+`<img role="presentation" >`
+굳이 클릭하지 않아도 된다.
