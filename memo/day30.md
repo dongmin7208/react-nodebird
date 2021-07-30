@@ -71,4 +71,12 @@ id 더미데이터 만들어놓은거 사용.
 `// const { me } = useSelector((state) => state.user.me && state.user.me.id);`
 같은거
 
-`npm i @ant-design/icons;'
+`npm i @ant-design/icons;`
+
+```
+const onToggleLike = useCallback(() => {
+    setLiked((prev) => !prev);
+  }, []);
+```
+
+true false 전환
