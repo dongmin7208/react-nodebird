@@ -76,3 +76,48 @@ g.next() //입력
 
 while true 무한반복문인데
 매번 중단됨 saga에서는 조금 다름 계속 종료되
+
+```
+import { all, fork, take} from 'redux-saga/effects';
+
+function* watchLogIn(){
+    yield take('LOG_IN')
+}
+
+function* watchLogOut(){
+    yield take('LOG_OUT');
+}
+
+function* watchAddPost(){
+    yield take('ADD_POST');
+}
+
+export default function* rootSaga() {
+    yield all([
+        fork(watchLogIn),
+        fork(watchLogOut),
+        fork(watchAddPost),
+    ]);
+}
+
+```
+
+fork는 이 함수를 실행하는것
+call vs fork 차이점이 있음 같은의미인데
+all은 동시에 실행해준다
+
+`npm i axios'
+
+redux는 액션이 너무많은게 단점
+yield가 await이랑 비슷
+fork
+while take는 동기적으로 동작하지만
+takeEvery는 비동기로 동작한다는 차이가 있음.
+
+takeEvery, takeLatest
+latest 마우스 중복 방지위함 마지막 마우슨클릭만 들어옴
+
+throttle 2000 2초동안에 한번만 실행
+대부분 takeLatest사용함
+
+비동기는 항상 request, scssce, fail 3개
