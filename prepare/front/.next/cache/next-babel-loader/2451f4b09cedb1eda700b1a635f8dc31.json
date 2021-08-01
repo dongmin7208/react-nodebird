@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function* rootSaga() {}","map":{"version":3,"sources":["/Users/parkdongmin/github/react-nodebird/prepare/front/sagas/index.js"],"names":["rootSaga"],"mappings":"AAAA,eAAe,UAAUA,QAAV,GAAqB,CAAE","sourcesContent":["export default function* rootSaga() {}\n"]},"metadata":{},"sourceType":"module"}

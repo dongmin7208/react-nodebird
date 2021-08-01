@@ -1,11 +1,15 @@
-import { all, fork } from "redux-saga/effects";
-import postSaga from "./post";
-import userSaga from "./user";
+import { all, fork } from 'redux-saga/effects';
+import axios from 'axios';
 
-//한번에 등록시켜준다
+import postSaga from './post';
+import userSaga from './user';
+
+axios.defaults.baseURL = 'http://localhost:3065';
+axios.defaults.withCredentials = true;
+
 export default function* rootSaga() {
   yield all([
-    fork(postSaga), //콜
+    fork(postSaga),
     fork(userSaga),
   ]);
 }

@@ -1,5 +1,5 @@
-import styled, { createGlobalStyle } from "styled-components";
-import { CloseOutlined } from "@ant-design/icons";
+import styled, { createGlobalStyle } from 'styled-components';
+import { CloseOutlined } from '@ant-design/icons';
 
 export const Overlay = styled.div`
   position: fixed;
@@ -9,13 +9,14 @@ export const Overlay = styled.div`
   right: 0;
   bottom: 0;
 `;
+
 export const Header = styled.header`
-  header: 44px;
+  height: 44px;
   background: white;
   position: relative;
   padding: 0;
   text-align: center;
-
+  
   & h1 {
     margin: 0;
     font-size: 17px;
@@ -37,10 +38,11 @@ export const SlickWrapper = styled.div`
   height: calc(100% - 44px);
   background: #090909;
 `;
+
 export const ImgWrapper = styled.div`
   padding: 32px;
   text-align: center;
-
+  
   & img {
     margin: 0 auto;
     max-height: 750px;
@@ -49,7 +51,7 @@ export const ImgWrapper = styled.div`
 
 export const Indicator = styled.div`
   text-align: center;
-
+  
   & > div {
     width: 75px;
     height: 30px;
@@ -65,9 +67,9 @@ export const Indicator = styled.div`
 
 export const Global = createGlobalStyle`
   .slick-slide {
-      display: inline-block;
+    display: inline-block;
   }
   .ant-card-cover {
-      transform: none !important;
+    transform: none !important;
   }
 `;
