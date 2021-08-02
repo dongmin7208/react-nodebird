@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
   res.send("hello express");
 });
 
-app.get("/post", (req, res) => {
+app.get("/", (req, res) => {
   res.send("hello api");
 });
 app.get("/posts", (req, res) => {
@@ -24,7 +24,7 @@ app.get("/posts", (req, res) => {
   ]);
 });
 
-app.use(postRouter);
+app.use("/post", postRouter);
 
 app.listen(3065, () => {
   console.log("실행중");
