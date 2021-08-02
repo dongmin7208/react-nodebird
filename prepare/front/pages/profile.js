@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
-import Head from 'next/head';
-import { useSelector, useDispatch } from 'react-redux';
-import Router from 'next/router';
+import React, { useEffect } from "react";
+import Head from "next/head";
+import { useSelector, useDispatch } from "react-redux";
+import Router from "next/router";
 
-import AppLayout from '../components/AppLayout';
-import NicknameEditForm from '../components/NicknameEditForm';
-import FollowList from '../components/FollowList';
-import { LOAD_FOLLOWERS_REQUEST, LOAD_FOLLOWINGS_REQUEST } from '../reducers/user';
+import AppLayout from "../components/AppLayout";
+import NicknameEditForm from "../components/NicknameEditForm";
+import FollowList from "../components/FollowList";
+import {
+  LOAD_FOLLOWERS_REQUEST,
+  LOAD_FOLLOWINGS_REQUEST,
+} from "../reducers/user";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -21,10 +24,10 @@ const Profile = () => {
       type: LOAD_FOLLOWINGS_REQUEST,
     });
   }, []);
-
+  //로그인안하고 프로필페이지가면 오류생기는거 방지.
   useEffect(() => {
     if (!(me && me.id)) {
-      Router.push('/');
+      Router.push("/");
     }
   }, [me && me.id]);
 
