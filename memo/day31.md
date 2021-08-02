@@ -115,7 +115,7 @@ while take는 동기적으로 동작하지만
 takeEvery는 비동기로 동작한다는 차이가 있음.
 
 takeEvery, takeLatest
-latest 마우스 중복 방지위함 마지막 마우슨클릭만 들어옴
+latest 마우스 중복 방지위함 마지막 마우스클릭만 들어옴
 
 throttle 2000 2초동안에 한번만 실행
 대부분 takeLatest사용함
