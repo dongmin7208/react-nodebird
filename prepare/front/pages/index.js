@@ -32,7 +32,7 @@ const Home = () => {
     function onScroll() {
       if (
         window.pageYOffset + document.documentElement.clientHeight >
-        document.documentElement.scrollHeight - 300
+        document.documentElement.scrollHeight - 500
       ) {
         if (hasMorePosts && !loadPostsLoading) {
           const lastId = mainPosts[mainPosts.length - 1]?.id;
