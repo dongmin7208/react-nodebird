@@ -1,18 +1,49 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
-const router = require("./post");
-const routes = express.Router();
-const { User, Post } = require("../models");
-const { noExtendLeft } = require("sequelize/types/lib/operators");
-const db = require("../models");
-const { isNotLoggedIn, isLoggedIn } = require("./middlewares");
+const passport = require("passport");
 
-router.post("/login", passport.authenticate("local"));
+const { User, Post } = require("../models");
+const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
+
+const router = express.Router();
+
+router.get("/", async (req, res, next) => {
+  // GET /user
+  try {
+    if (req.user) {
+      const fullUserWithoutPassword = await User.findOne({
+        where: { id: req.user.id },
+        attributes: {
+          exclude: ["password"],
+        },
+        include: [
+          {
+            model: Post,
+            attributes: ["id"],
+          },
+          {
+            model: User,
+            as: "Followings",
+            attributes: ["id"],
+          },
+          {
+            model: User,
+            as: "Followers",
+            attributes: ["id"],
+          },
+        ],
+      });
+      res.status(200).json(fullUserWithoutPassword);
+    } else {
+      res.status(200).json(null);
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 
 router.post("/login", isNotLoggedIn, (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  }
   passport.authenticate("local", (err, user, info) => {
     if (err) {
       console.error(err);
@@ -34,18 +65,21 @@ router.post("/login", isNotLoggedIn, (req, res, next) => {
         include: [
           {
             model: Post,
+            attributes: ["id"],
           },
           {
             model: User,
             as: "Followings",
+            attributes: ["id"],
           },
           {
             model: User,
             as: "Followers",
+            attributes: ["id"],
           },
         ],
       });
-      return res.status(200).json(user);
+      return res.status(200).json(fullUserWithoutPassword);
     });
   })(req, res, next);
 });

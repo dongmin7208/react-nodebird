@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { all, fork, put, takeLatest, throttle, call } from 'redux-saga/effects';
+import axios from "axios";
+import { all, fork, put, takeLatest, throttle, call } from "redux-saga/effects";
 
 import {
   ADD_COMMENT_FAILURE,
@@ -7,19 +7,27 @@ import {
   ADD_COMMENT_SUCCESS,
   ADD_POST_FAILURE,
   ADD_POST_REQUEST,
-  ADD_POST_SUCCESS, LIKE_POST_FAILURE,
-  LIKE_POST_REQUEST, LIKE_POST_SUCCESS,
+  ADD_POST_SUCCESS,
+  LIKE_POST_FAILURE,
+  LIKE_POST_REQUEST,
+  LIKE_POST_SUCCESS,
   LOAD_POSTS_FAILURE,
   LOAD_POSTS_REQUEST,
   LOAD_POSTS_SUCCESS,
   REMOVE_POST_FAILURE,
   REMOVE_POST_REQUEST,
-  REMOVE_POST_SUCCESS, RETWEET_FAILURE, RETWEET_REQUEST, RETWEET_SUCCESS, UNLIKE_POST_FAILURE,
-  UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS,
+  REMOVE_POST_SUCCESS,
+  RETWEET_FAILURE,
+  RETWEET_REQUEST,
+  RETWEET_SUCCESS,
+  UNLIKE_POST_FAILURE,
+  UNLIKE_POST_REQUEST,
+  UNLIKE_POST_SUCCESS,
   UPLOAD_IMAGES_FAILURE,
-  UPLOAD_IMAGES_REQUEST, UPLOAD_IMAGES_SUCCESS,
-} from '../reducers/post';
-import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
+  UPLOAD_IMAGES_REQUEST,
+  UPLOAD_IMAGES_SUCCESS,
+} from "../reducers/post";
+import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducers/user";
 
 function retweetAPI(data) {
   return axios.post(`/post/${data}/retweet`);
@@ -42,7 +50,7 @@ function* retweet(action) {
 }
 
 function uploadImagesAPI(data) {
-  return axios.post('/post/images', data);
+  return axios.post("/post/images", data);
 }
 
 function* uploadImages(action) {
@@ -122,7 +130,7 @@ function* loadPosts(action) {
 }
 
 function addPostAPI(data) {
-  return axios.post('/post', data);
+  return axios.post("/post", data);
 }
 
 function* addPost(action) {
@@ -170,7 +178,7 @@ function* removePost(action) {
 }
 
 function addCommentAPI(data) {
-  return axios.post(`/post/${data.postId}/comment`, data); // POST /post/1/comment
+  return axios.post(`/post/${data.postId}/comment`, data); // POST /post/1/comment   실제주소 게시글 1번에 댓글을 작성하는구나라고 알수있음.
 }
 
 function* addComment(action) {
