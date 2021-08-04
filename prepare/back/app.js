@@ -20,7 +20,8 @@ db.sequelize
 passportConfig();
 app.use(
   cors({
-    origin: true,
+    origin: "http://localhost:3060", //* 안된다. 프론트와백엔드간에 민감한 정보를 보내니까. 정확한 주소를 적어달라 에러
+    credentials: true, //쿠키를 같이 전달하고싶으면 true로 만들어주면뎀.
   })
 );
 //밑에서 실행되면 안됨 위에서부터 실행되서 post가 undefind 될수있으니.
@@ -41,9 +42,6 @@ app.get("/", (req, res) => {
   res.send("hello express");
 });
 
-app.get("/", (req, res) => {
-  res.send("hello api");
-});
 app.get("/posts", (req, res) => {
   res.json([
     { id: 1, content: "hello" },
