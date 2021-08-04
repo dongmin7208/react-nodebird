@@ -20,9 +20,21 @@ router.post("/", isLoggedIn, async (req, res, next) => {
         },
         {
           model: Comment,
+          include: [
+            {
+              model: User, //댓글 작성자!
+              attributes: ["id", "nickname"],
+            },
+          ],
         },
         {
-          model: User,
+          model: User, //게시글 작성자
+          attributes: ["id", "nickname"],
+        },
+        {
+          model: User, //좋아요눌른사람
+          as: "Likers",
+          attributes: ["id"],
         },
       ],
     });
@@ -47,7 +59,7 @@ router.post("/:postId/comment", isLoggedIn, async (req, res, next) => {
     }
     const comment = await Comment.create({
       content: req.body.content,
-      PostId: req.params.postId,
+      PostId: parseInt(req.params.postId, 10),
       UserId: req.user.id,
     });
     res.status(201).json(comment);
