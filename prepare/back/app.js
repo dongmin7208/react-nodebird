@@ -1,8 +1,15 @@
 const express = require("express");
 const postRouter = require("./routes/post");
+const cors = require("cors");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const dotenv = require("dotenv");
 const userRouter = require("./routes/user");
 const db = require("./models"); //db안에 sequelize 맨밑에 넣어놨음. 5번째 코드
 const passportConfig = require("./passport");
+const passport = require("./passport");
+
+dotenv.config();
 const app = express();
 db.sequelize
   .sync()
@@ -19,6 +26,16 @@ app.use(
 //밑에서 실행되면 안됨 위에서부터 실행되서 post가 undefind 될수있으니.
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(process.env.COOKIE_SECRE));
+app.use(
+  session({
+    savaUninitialized: false,
+    resave: false,
+    secret: process.env.COOKIE_SECRET,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/", (req, res) => {
   res.send("hello express");

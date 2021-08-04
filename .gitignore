@@ -2,3 +2,4 @@ node_modules
 .next
 packge.json
 packge-lock.json
+.env
