@@ -30,7 +30,7 @@ router.post("/login", (req, res, next) => {
 `npm i dotenv`
 .=dot .env
 개인정보 보호를 위해
-
+[쿠키/세션과 전체 로그인 흐름.]
 json이면 dot env못써서
 config 파일확장자 js로 변경
 

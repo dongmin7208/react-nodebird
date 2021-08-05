@@ -69,16 +69,19 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
           model: Comment,
           include: [
             {
+              //댓글 작성자
               model: User,
               attributes: ["id", "nickname"],
             },
           ],
         },
         {
+          //게시글 작성자
           model: User,
           attributes: ["id", "nickname"],
         },
         {
+          //좋아요 누른ㄴ사람
           model: User,
           as: "Likers",
           attributes: ["id"],
@@ -96,6 +99,59 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
 router.post("/images", isLoggedIn, upload.array("image"), (req, res, next) => {
   console.log(req.files);
   res.json(req.files.map((v) => v.filename));
+});
+
+router.get("/:postId", isLoggedIn, async (req, res, next) => {
+  // GET /post/1/
+  // POST /post/1/retweet
+  try {
+    const post = await Post.findOne({
+      where: { id: req.params.postId },
+    });
+    if (!post) {
+      return res.status(404).send("존재하지 않는 게시글입니다.");
+    }
+
+    const fulPost = await Post.findOne({
+      where: { id: post.id },
+      include: [
+        {
+          model: Post,
+          as: "Retweet",
+          include: [
+            {
+              model: User,
+              attributes: ["id", "nickname"],
+            },
+            {
+              model: Image,
+            },
+          ],
+        },
+        {
+          model: User,
+          attributes: ["id", "nickname"],
+        },
+        {
+          model: Image,
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["id", "nickname"],
+            },
+          ],
+        },
+        //{model:User, as: 'Likers', attributes:['id'],}
+      ],
+    });
+    res.status(200).json(fulPost);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
 });
 
 router.post("/:postId/retweet", isLoggedIn, async (req, res, next) => {
