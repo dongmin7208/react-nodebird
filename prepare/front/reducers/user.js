@@ -254,7 +254,6 @@ const reducer = (state = initialState, action) =>
       //     Posts: state.me.Posts.filter((v) => v.id !== action.data),
       //   },
       // };
-      //7줄 코드를 2줄로 바꿔주고 알아서 불변성을 지켜준다.
       default:
         break;
     }

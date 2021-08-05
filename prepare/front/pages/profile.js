@@ -24,7 +24,7 @@ const Profile = () => {
       type: LOAD_FOLLOWINGS_REQUEST,
     });
   }, []);
-  //로그인안하고 프로필페이지가면 오류생기는거 방지.
+
   useEffect(() => {
     if (!(me && me.id)) {
       Router.push("/");

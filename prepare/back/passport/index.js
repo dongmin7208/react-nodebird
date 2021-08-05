@@ -4,6 +4,7 @@ const local = require("./local");
 
 module.exports = () => {
   passport.serializeUser((user, done) => {
+    // 서버쪽에 [{ id: 1, cookie: 'clhxy' }]
     done(null, user.id);
   });
 

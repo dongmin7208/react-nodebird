@@ -12,9 +12,9 @@ const postsRouter = require("./routes/posts");
 const userRouter = require("./routes/user");
 const db = require("./models");
 const passportConfig = require("./passport");
-
 dotenv.config();
 const app = express();
+
 db.sequelize
   .sync()
   .then(() => {
@@ -30,6 +30,7 @@ app.use(
   })
 );
 //밑에서 실행되면 안됨 위에서부터 실행되서 post가 undefind 될수있으니.
+//바로밑에 /images 추가해주면 postform에서도 경로 추가해줘야함.
 app.use("/", express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -47,7 +48,7 @@ app.use(passport.session());
 app.get("/", (req, res) => {
   res.send("hello express");
 });
-// API는 다른 서비스가 내 서비스의 기능을 실행할 수 있게 열어둔 창구
+// api 는 다른 서비스가 내 서비스의 기능을 실행할 수 있게 열어둔 창구
 app.use("/posts", postsRouter);
 app.use("/post", postRouter);
 app.use("/user", userRouter);
