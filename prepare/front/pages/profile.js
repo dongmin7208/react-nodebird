@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import Head from "next/head";
 import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
+import { END } from "redux-saga";
+import axios from "axios";
 
 import AppLayout from "../components/AppLayout";
 import NicknameEditForm from "../components/NicknameEditForm";
@@ -47,5 +49,25 @@ const Profile = () => {
     </>
   );
 };
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    console.log("getServerSideProps start");
+    console.log(context.req.headers);
+
+    const cookie = context.req ? context.req.headers.cookie : "";
+
+    axios.defaults.headers.Cookie = "";
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+
+    context.store.dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+    context.store.dispatch(END);
+    console.log("getServerSideProps end!");
+    await context.store.sagaTask.toPromise(); //store/configstore 에 사가 등록되어있음.
+  }
+);
 
 export default Profile;
