@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { END } from "redux-saga";
 
 import axios from "axios";
+import { LOAD_USER_POST_REQUEST } from "../../reducers/post";
 import { LOAD_POST_REQUEST } from "../../reducers/post";
 import wrapper from "../../store/configureStore";
 import PostCard from "../../components/PostCard";
@@ -62,7 +63,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
-    return { props: {} };
   }
 );
 
