@@ -136,7 +136,7 @@ function* loadMyInfo() {
   }
 }
 
-function loadUserAPI() {
+function loadUserAPI(data) {
   return axios.get(`/user/${data}`);
 }
 
