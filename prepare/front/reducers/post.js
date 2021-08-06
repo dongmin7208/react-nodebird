@@ -2,8 +2,8 @@ import produce from "../util/produce";
 
 export const initialState = {
   mainPosts: [],
-  imagePaths: [],
   singlePost: null,
+  imagePaths: [],
   hasMorePosts: true,
   likePostLoading: false,
   likePostDone: false,
@@ -11,9 +11,6 @@ export const initialState = {
   unlikePostLoading: false,
   unlikePostDone: false,
   unlikePostError: null,
-  loadPostLoading: false,
-  loadPostDone: false,
-  loadPostError: null,
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
@@ -26,6 +23,9 @@ export const initialState = {
   addCommentLoading: false,
   addCommentDone: false,
   addCommentError: null,
+  loadPostLoading: false,
+  loadPostDone: false,
+  loadPostError: null,
   uploadImagesLoading: false,
   uploadImagesDone: false,
   uploadImagesError: null,
@@ -46,6 +46,10 @@ export const UNLIKE_POST_REQUEST = "UNLIKE_POST_REQUEST";
 export const UNLIKE_POST_SUCCESS = "UNLIKE_POST_SUCCESS";
 export const UNLIKE_POST_FAILURE = "UNLIKE_POST_FAILURE";
 
+export const LOAD_POST_REQUEST = "LOAD_POST_REQUEST";
+export const LOAD_POST_SUCCESS = "LOAD_POST_SUCCESS";
+export const LOAD_POST_FAILURE = "LOAD_POST_FAILURE";
+
 export const LOAD_USER_POSTS_REQUEST = "LOAD_USER_POSTS_REQUEST";
 export const LOAD_USER_POSTS_SUCCESS = "LOAD_USER_POSTS_SUCCESS";
 export const LOAD_USER_POSTS_FAILURE = "LOAD_USER_POSTS_FAILURE";
@@ -53,10 +57,6 @@ export const LOAD_USER_POSTS_FAILURE = "LOAD_USER_POSTS_FAILURE";
 export const LOAD_HASHTAG_POSTS_REQUEST = "LOAD_HASHTAG_POSTS_REQUEST";
 export const LOAD_HASHTAG_POSTS_SUCCESS = "LOAD_HASHTAG_POSTS_SUCCESS";
 export const LOAD_HASHTAG_POSTS_FAILURE = "LOAD_HASHTAG_POSTS_FAILURE";
-
-export const LOAD_POST_REQUEST = "LOAD_POST_REQUEST";
-export const LOAD_POST_SUCCESS = "LOAD_POST_SUCCESS";
-export const LOAD_POST_FAILURE = "LOAD_POST_FAILURE";
 
 export const LOAD_POSTS_REQUEST = "LOAD_POSTS_REQUEST";
 export const LOAD_POSTS_SUCCESS = "LOAD_POSTS_SUCCESS";
@@ -159,7 +159,6 @@ const reducer = (state = initialState, action) =>
         draft.unlikePostLoading = false;
         draft.unlikePostError = action.error;
         break;
-
       case LOAD_POST_REQUEST:
         draft.loadPostLoading = true;
         draft.loadPostDone = false;
@@ -175,9 +174,8 @@ const reducer = (state = initialState, action) =>
         draft.loadPostError = action.error;
         break;
       case LOAD_USER_POSTS_REQUEST:
+      case LOAD_POSTS_REQUEST:
       case LOAD_HASHTAG_POSTS_REQUEST:
-      case LOAD_POSTS_REQUEST:
-      case LOAD_POSTS_REQUEST:
         draft.loadPostsLoading = true;
         draft.loadPostsDone = false;
         draft.loadPostsError = null;
