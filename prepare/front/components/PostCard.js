@@ -1,26 +1,63 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { Card, Popover, Button, Avatar, List, Comment } from 'antd';
+import React, { useState, useCallback } from "react";
+import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
+import { Card, Popover, Button, Avatar, List, Comment } from "antd";
+import Link from "next/link";
 import {
-  RetweetOutlined, HeartOutlined, MessageOutlined, EllipsisOutlined, HeartTwoTone,
-} from '@ant-design/icons';
+  RetweetOutlined,
+  HeartOutlined,
+  MessageOutlined,
+  EllipsisOutlined,
+  HeartTwoTone,
+} from "@ant-design/icons";
+import moment from "moment";
 
-import PostImages from './PostImages';
-import CommentForm from './CommentForm';
-import PostCardContent from './PostCardContent';
-import { LIKE_POST_REQUEST, REMOVE_POST_REQUEST, UNLIKE_POST_REQUEST, RETWEET_REQUEST } from '../reducers/post';
-import FollowButton from './FollowButton';
+import PostImages from "./PostImages";
+import CommentForm from "./CommentForm";
+import PostCardContent from "./PostCardContent";
+import {
+  LIKE_POST_REQUEST,
+  REMOVE_POST_REQUEST,
+  UNLIKE_POST_REQUEST,
+  RETWEET_REQUEST,
+  UPDATE_POST_REQUEST,
+} from "../reducers/post";
+import FollowButton from "./FollowButton";
+
+//기본 영어이기때문에 한글로 바꿔줌.
+moment.locale("ko");
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const { removePostLoading } = useSelector((state) => state.post);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const id = useSelector((state) => state.user.me?.id);
+  const [editMode, setEditMode] = useState(false);
+
+  // const onClickUpdate = useCallback(() => {
+  //   setEditMode(true);
+  // }, []);
+
+  // const onCancelUpdate = useCallback(() => {
+  //   setEditMode(false);
+  // }, []);
+
+  // const onChangePost = useCallback(
+  //   (editText) => () => {
+  //     dispatch({
+  //       type: UPDATE_POST_REQUEST,
+  //       data: {
+  //         PostId: post.id,
+  //         content: editText,
+  //       },
+  //     });
+  //   },
+  //   [post]
+  // );
 
   const onLike = useCallback(() => {
     if (!id) {
-      return alert('로그인이 필요합니다.');
+      return alert("로그인이 필요합니다.");
     }
     return dispatch({
       type: LIKE_POST_REQUEST,
@@ -29,7 +66,7 @@ const PostCard = ({ post }) => {
   }, [id]);
   const onUnlike = useCallback(() => {
     if (!id) {
-      return alert('로그인이 필요합니다.');
+      return alert("로그인이 필요합니다.");
     }
     return dispatch({
       type: UNLIKE_POST_REQUEST,
@@ -42,7 +79,7 @@ const PostCard = ({ post }) => {
 
   const onRemovePost = useCallback(() => {
     if (!id) {
-      return alert('로그인이 필요합니다.');
+      return alert("로그인이 필요합니다.");
     }
     return dispatch({
       type: REMOVE_POST_REQUEST,
@@ -52,7 +89,7 @@ const PostCard = ({ post }) => {
 
   const onRetweet = useCallback(() => {
     if (!id) {
-      return alert('로그인이 필요합니다.');
+      return alert("로그인이 필요합니다.");
     }
     return dispatch({
       type: RETWEET_REQUEST,
@@ -67,50 +104,96 @@ const PostCard = ({ post }) => {
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
           <RetweetOutlined key="retweet" onClick={onRetweet} />,
-          liked
-            ? <HeartTwoTone twoToneColor="#eb2f96" key="heart" onClick={onUnlike} />
-            : <HeartOutlined key="heart" onClick={onLike} />,
+          liked ? (
+            <HeartTwoTone
+              twoToneColor="#eb2f96"
+              key="heart"
+              onClick={onUnlike}
+            />
+          ) : (
+            <HeartOutlined key="heart" onClick={onLike} />
+          ),
           <MessageOutlined key="comment" onClick={onToggleComment} />,
           <Popover
             key="more"
-            content={(
+            content={
               <Button.Group>
-                {id && post.User.id === id
-                  ? (
-                    <>
-                      <Button>수정</Button>
-                      <Button type="danger" loading={removePostLoading} onClick={onRemovePost}>삭제</Button>
-                    </>
-                  )
-                  : <Button>신고</Button>}
+                {id && post.User.id === id ? (
+                  <>
+                    {/* {!post.RetweetId && (
+                      <Button onClick={onClickUpdate}>수정</Button>
+                   )} */}
+                    <Button>수정</Button>
+                    <Button
+                      type="danger"
+                      loading={removePostLoading}
+                      onClick={onRemovePost}
+                    >
+                      삭제
+                    </Button>
+                  </>
+                ) : (
+                  <Button>신고</Button>
+                )}
               </Button.Group>
-            )}
+            }
           >
             <EllipsisOutlined />
           </Popover>,
         ]}
-        title={post.RetweetId ? `${post.User.nickname}님이 리트윗하셨습니다.` : null}
+        title={
+          post.RetweetId ? `${post.User.nickname}님이 리트윗하셨습니다.` : null
+        }
         extra={id && <FollowButton post={post} />}
       >
-        {post.RetweetId && post.Retweet
-          ? (
-            <Card
-              cover={post.Retweet.Images[0] && <PostImages images={post.Retweet.Images} />}
-            >
-              <Card.Meta
-                avatar={<Avatar>{post.Retweet.User.nickname[0]}</Avatar>}
-                title={post.Retweet.User.nickname}
-                description={<PostCardContent postData={post.Retweet.content} />}
-              />
-            </Card>
-          )
-          : (
+        {post.RetweetId && post.Retweet ? (
+          <Card
+            cover={
+              post.Retweet.Images[0] && (
+                <PostImages images={post.Retweet.Images} />
+              )
+            }
+          >
+            <div style={{ float: "right" }}>
+              {moment(post.createdAt).format("YYYY.MM.DD")}
+            </div>
             <Card.Meta
-              avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
-              title={post.User.nickname}
-              description={<PostCardContent postData={post.content} />}
+              avatar={
+                <Link href={`/user/${post.Retweet.User.id}`}>
+                  <a>
+                    <Avatar>{post.Retweet.User.nickname[0]}</Avatar>
+                  </a>
+                </Link>
+              }
+              title={post.Retweet.User.nickname}
+              description={<PostCardContent postData={post.Retweet.content} />}
             />
-          )}
+          </Card>
+        ) : (
+          <>
+            <div style={{ float: "right" }}>
+              {moment(post.createdAt).format("YYYY.MM.DD")}
+            </div>
+            <Card.Meta
+              avatar={
+                <Link href={`/user/${post.User.id}`}>
+                  <a>
+                    <Avatar>{post.User.nickname[0]}</Avatar>
+                  </a>
+                </Link>
+              }
+              title={post.User.nickname}
+              description={
+                <PostCardContent
+                  // editMode={editMode}
+                  // onChangePost={onChangePost}
+                  // onCancelUpdate={onCancelUpdate}
+                  postData={post.content}
+                />
+              }
+            />
+          </>
+        )}
       </Card>
       {commentFormOpened && (
         <div>
@@ -123,7 +206,13 @@ const PostCard = ({ post }) => {
               <li>
                 <Comment
                   author={item.User.nickname}
-                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                  avatar={
+                    <Link href={`/user/${item.User.id}`}>
+                      <a>
+                        <Avatar>{item.User.nickname[0]}</Avatar>
+                      </a>
+                    </Link>
+                  }
                   content={item.content}
                 />
               </li>
