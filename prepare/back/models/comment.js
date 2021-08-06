@@ -1,6 +1,6 @@
 const DataTypes = require("sequelize");
 const { Model } = DataTypes;
-
+//이 최신문법을써야지 나중에 typescript에도 도움됨.
 module.exports = class Comment extends Model {
   static init(sequelize) {
     return super.init(

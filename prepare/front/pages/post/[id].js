@@ -1,4 +1,3 @@
-// [ 계속바뀜 ] 가능하게해줌 1,2,3,4, 식으로 늘어남 url주소가 끝에 됨
 import React from "react";
 import { useSelector } from "react-redux";
 import Head from "next/head";
@@ -6,22 +5,20 @@ import { useRouter } from "next/router";
 import { END } from "redux-saga";
 
 import axios from "axios";
-import { LOAD_USER_POST_REQUEST } from "../../reducers/post";
 import { LOAD_POST_REQUEST } from "../../reducers/post";
 import wrapper from "../../store/configureStore";
 import PostCard from "../../components/PostCard";
 import AppLayout from "../../components/AppLayout";
 import { LOAD_MY_INFO_REQUEST } from "../../reducers/user";
 
-//겟 스테틱 폴백 트루할때
-// if (router.isFallback) {
-//   return <div>로딩중...</div>;
-// }
-
 const Post = () => {
   const { singlePost } = useSelector((state) => state.post);
   const router = useRouter();
   const { id } = router.query;
+
+  // if (router.isFallback) {
+  //   return <div>Loading...</div>
+  // }
 
   return (
     <AppLayout>
@@ -50,15 +47,14 @@ const Post = () => {
     </AppLayout>
   );
 };
-//사용자들이 몇개를 만들지 모르는데 제한을 두는역할
-//블로그같은
-//까다롭다 html이기때문에 빠르다
+
 // export async function getStaticPaths() {
 //   return {
 //     paths: [
 //       { params: { id: '1' } },
 //       { params: { id: '2' } },
 //       { params: { id: '3' } },
+//       { params: { id: '4' } },
 //     ],
 //     fallback: true,
 //   };
@@ -81,6 +77,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
+    return { props: {} };
   }
 );
 

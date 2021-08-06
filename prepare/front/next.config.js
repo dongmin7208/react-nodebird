@@ -3,20 +3,18 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 module.exports = withBundleAnalyzer({
-  compress: true,
+  distDir: ".next",
   webpack(config, { webpack }) {
     const prod = process.env.NODE_ENV === "production";
+    const plugins = [
+      ...config.plugins,
+      new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /^\.\/ja$/),
+    ];
     return {
       ...config,
       mode: prod ? "production" : "development",
       devtool: prod ? "hidden-source-map" : "eval",
-      //배포일때 히든소스맵 좋음.
-      plugins: [
-        ...config.plugins,
-        new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /^\.\/ko$/),
-      ],
+      plugins,
     };
   },
 });
-
-// 불변셩 지켜야할때 immer써도됨.

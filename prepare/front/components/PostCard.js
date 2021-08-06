@@ -2,7 +2,6 @@ import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, Popover, Button, Avatar, List, Comment } from "antd";
-import Link from "next/link";
 import {
   RetweetOutlined,
   HeartOutlined,
@@ -10,6 +9,7 @@ import {
   EllipsisOutlined,
   HeartTwoTone,
 } from "@ant-design/icons";
+import Link from "next/link";
 import moment from "moment";
 
 import PostImages from "./PostImages";
@@ -20,11 +20,9 @@ import {
   REMOVE_POST_REQUEST,
   UNLIKE_POST_REQUEST,
   RETWEET_REQUEST,
-  UPDATE_POST_REQUEST,
 } from "../reducers/post";
 import FollowButton from "./FollowButton";
 
-//기본 영어이기때문에 지역으로 바꿔줌.
 moment.locale("ja");
 
 const PostCard = ({ post }) => {
@@ -32,28 +30,6 @@ const PostCard = ({ post }) => {
   const { removePostLoading } = useSelector((state) => state.post);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const id = useSelector((state) => state.user.me?.id);
-  const [editMode, setEditMode] = useState(false);
-
-  // const onClickUpdate = useCallback(() => {
-  //   setEditMode(true);
-  // }, []);
-
-  // const onCancelUpdate = useCallback(() => {
-  //   setEditMode(false);
-  // }, []);
-
-  // const onChangePost = useCallback(
-  //   (editText) => () => {
-  //     dispatch({
-  //       type: UPDATE_POST_REQUEST,
-  //       data: {
-  //         PostId: post.id,
-  //         content: editText,
-  //       },
-  //     });
-  //   },
-  //   [post]
-  // );
 
   const onLike = useCallback(() => {
     if (!id) {
@@ -120,9 +96,6 @@ const PostCard = ({ post }) => {
               <Button.Group>
                 {id && post.User.id === id ? (
                   <>
-                    {/* {!post.RetweetId && (
-                      <Button onClick={onClickUpdate}>수정</Button>
-                   )} */}
                     <Button>수정</Button>
                     <Button
                       type="danger"
@@ -154,9 +127,9 @@ const PostCard = ({ post }) => {
               )
             }
           >
-            <div style={{ float: "right" }}>
+            <span style={{ float: "right" }}>
               {moment(post.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
-            </div>
+            </span>
             <Card.Meta
               avatar={
                 <Link href={`/user/${post.Retweet.User.id}`}>
@@ -167,31 +140,23 @@ const PostCard = ({ post }) => {
               }
               title={post.Retweet.User.nickname}
               description={<PostCardContent postData={post.Retweet.content} />}
-              //description={<PostCardContent postData={post.Retweet.content} onChangePost={onChangePost} onCancelUpdate={onCancelUpdate} />}
             />
           </Card>
         ) : (
           <>
-            <div style={{ float: "right" }}>
+            <span style={{ float: "right" }}>
               {moment(post.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
-            </div>
+            </span>
             <Card.Meta
               avatar={
-                <Link href={`/user/${post.User.id}`} prefetch={false}>
+                <Link href={`/user/${post.User.id}`}>
                   <a>
                     <Avatar>{post.User.nickname[0]}</Avatar>
                   </a>
                 </Link>
               }
               title={post.User.nickname}
-              description={
-                <PostCardContent
-                  // editMode={editMode}
-                  // onChangePost={onChangePost}
-                  // onCancelUpdate={onCancelUpdate}
-                  postData={post.content}
-                />
-              }
+              description={<PostCardContent postData={post.content} />}
             />
           </>
         )}
@@ -208,7 +173,7 @@ const PostCard = ({ post }) => {
                 <Comment
                   author={item.User.nickname}
                   avatar={
-                    <Link href={`/user/${item.User.id}`} prefetch={false}>
+                    <Link href={`/user/${item.User.id}`}>
                       <a>
                         <Avatar>{item.User.nickname[0]}</Avatar>
                       </a>
