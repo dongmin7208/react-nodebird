@@ -214,7 +214,7 @@ function* loadHashtagPosts(action) {
       data: result.data,
     });
   } catch (err) {
-    console.error(err);
+    console.error(err); //에러메시지 나오게해줘
     yield put({
       type: LOAD_HASHTAG_POSTS_FAILURE,
       data: err.response.data,

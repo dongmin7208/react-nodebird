@@ -52,7 +52,7 @@ const Post = () => {
 };
 //사용자들이 몇개를 만들지 모르는데 제한을 두는역할
 //블로그같은
-//
+//까다롭다 html이기때문에 빠르다
 // export async function getStaticPaths() {
 //   return {
 //     paths: [
