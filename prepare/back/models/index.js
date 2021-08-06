@@ -22,6 +22,7 @@ db.Image = image;
 db.Post = post;
 db.User = user;
 
+//위에 클래스명만 적어주는대신에.
 Object.keys(db).forEach((modelName) => {
   db[modelName].init(sequelize);
 });

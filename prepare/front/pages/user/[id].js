@@ -1,4 +1,3 @@
-// [ 계속바뀜 ] 가능하게해줌 1,2,3,4, 식으로 늘어남 url주소가 끝에 됨
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Card } from "antd";

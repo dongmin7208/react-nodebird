@@ -24,8 +24,8 @@ import {
 } from "../reducers/post";
 import FollowButton from "./FollowButton";
 
-//기본 영어이기때문에 한글로 바꿔줌.
-moment.locale("ko");
+//기본 영어이기때문에 지역으로 바꿔줌.
+moment.locale("ja");
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
@@ -155,7 +155,7 @@ const PostCard = ({ post }) => {
             }
           >
             <div style={{ float: "right" }}>
-              {moment(post.createdAt).format("YYYY.MM.DD")}
+              {moment(post.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
             </div>
             <Card.Meta
               avatar={
@@ -167,16 +167,17 @@ const PostCard = ({ post }) => {
               }
               title={post.Retweet.User.nickname}
               description={<PostCardContent postData={post.Retweet.content} />}
+              //description={<PostCardContent postData={post.Retweet.content} onChangePost={onChangePost} onCancelUpdate={onCancelUpdate} />}
             />
           </Card>
         ) : (
           <>
             <div style={{ float: "right" }}>
-              {moment(post.createdAt).format("YYYY.MM.DD")}
+              {moment(post.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
             </div>
             <Card.Meta
               avatar={
-                <Link href={`/user/${post.User.id}`}>
+                <Link href={`/user/${post.User.id}`} prefetch={false}>
                   <a>
                     <Avatar>{post.User.nickname[0]}</Avatar>
                   </a>
@@ -207,7 +208,7 @@ const PostCard = ({ post }) => {
                 <Comment
                   author={item.User.nickname}
                   avatar={
-                    <Link href={`/user/${item.User.id}`}>
+                    <Link href={`/user/${item.User.id}`} prefetch={false}>
                       <a>
                         <Avatar>{item.User.nickname[0]}</Avatar>
                       </a>
