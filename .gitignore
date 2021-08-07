@@ -1,5 +1,5 @@
 node_modules
 .next
-packge.json
-packge-lock.json
 .env
+react-nodebird.pem
+react-nodebird-aws.pem
