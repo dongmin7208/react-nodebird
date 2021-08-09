@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: ["http://localhost:3060", "nodebird.com", "http://54.178.45.151"], //* 안된다. 프론트와백엔드간에 민감한 정보를 보내니까. 정확한 주소를 적어달라 에러
+    origin: ["http://localhost:3060", "http://54.178.45.151"], //* 안된다. 프론트와백엔드간에 민감한 정보를 보내니까. 정확한 주소를 적어달라 에러
     credentials: true, //쿠키를 같이 전달하고싶으면 true로 만들어주면뎀.
   })
 );
@@ -51,6 +51,11 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      domain: process.env.NODE_ENV === "production" && ".nodebird.com",
+    },
   })
 );
 app.use(passport.initialize());
