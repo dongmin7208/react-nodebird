@@ -5,7 +5,7 @@ import Router from "next/router";
 import { END } from "redux-saga";
 import axios from "axios";
 import useSWR from "swr";
-
+import { backUrl } from "../config/config";
 import AppLayout from "../components/AppLayout";
 import NicknameEditForm from "../components/NicknameEditForm";
 import FollowList from "../components/FollowList";
@@ -20,11 +20,11 @@ const Profile = () => {
   const [followersLimit, setFollowersLimit] = useState(3);
 
   const { data: followingsData, error: followingError } = useSWR(
-    `http://localhost:3065/user/followings?limit=${followingsLimit}`,
+    `${backUrl}/user/followings?limit=${followingsLimit}`,
     fetcher
   );
   const { data: followersData, error: followerError } = useSWR(
-    `http://localhost:3065/user/followers?limit=${followersLimit}`,
+    `${backUrl}/user/followers?limit=${followersLimit}`,
     fetcher
   );
 
