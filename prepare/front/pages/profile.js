@@ -5,31 +5,31 @@ import Router from "next/router";
 import { END } from "redux-saga";
 import axios from "axios";
 import useSWR from "swr";
-import { backUrl } from "../config/config";
+
 import AppLayout from "../components/AppLayout";
 import NicknameEditForm from "../components/NicknameEditForm";
 import FollowList from "../components/FollowList";
 import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
 import wrapper from "../store/configureStore";
-//fetcher를 다른걸로 바꾸면 graphql도 쓸수있음.
+import { backUrl } from "../config/config";
+//fetcher 를 다른거로 바꾸면 그래프큐엘도 사용가능.
 const fetcher = (url) =>
   axios.get(url, { withCredentials: true }).then((result) => result.data);
 
 const Profile = () => {
-  const [followingsLimit, setFollowingsLimit] = useState(3);
+  const { me } = useSelector((state) => state.user);
   const [followersLimit, setFollowersLimit] = useState(3);
+  const [followingsLimit, setFollowingsLimit] = useState(3);
 
-  const { data: followingsData, error: followingError } = useSWR(
-    `${backUrl}/user/followings?limit=${followingsLimit}`,
-    fetcher
-  );
   const { data: followersData, error: followerError } = useSWR(
     `${backUrl}/user/followers?limit=${followersLimit}`,
     fetcher
   );
+  const { data: followingsData, error: followingError } = useSWR(
+    `${backUrl}/user/followings?limit=${followingsLimit}`,
+    fetcher
+  );
 
-  const { me } = useSelector((state) => state.user);
-  //hooks 순서 중요!
   useEffect(() => {
     if (!(me && me.id)) {
       Router.push("/");
@@ -44,18 +44,19 @@ const Profile = () => {
     setFollowersLimit((prev) => prev + 3);
   }, []);
 
-  if (followerError || followingError) {
-    console.error(followerError || followingError);
-    return "팔로잉/팔로워 로딩 중 에러가 발생했습니다.";
-  }
   if (!me) {
     return "내 정보 로딩중...";
+  }
+
+  if (followerError || followingError) {
+    console.error(followerError || followingError);
+    return <div>팔로잉/팔로워 로딩 중 에러가 발생합니다.</div>;
   }
 
   return (
     <>
       <Head>
-        <title>my frofile | NodeBird</title>
+        <title>내 프로필 | NodeBird</title>
       </Head>
       <AppLayout>
         <NicknameEditForm />
@@ -63,18 +64,19 @@ const Profile = () => {
           header="팔로잉"
           data={followingsData}
           onClickMore={loadMoreFollowings}
-          loading={!followingError && !followingsData}
+          loading={!followingsData && !followingError}
         />
         <FollowList
           header="팔로워"
           data={followersData}
           onClickMore={loadMoreFollowers}
-          loading={!followerError && !followersData}
+          loading={!followersData && !followerError}
         />
       </AppLayout>
     </>
   );
 };
+
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     console.log("getServerSideProps start");
@@ -94,4 +96,3 @@ export const getServerSideProps = wrapper.getServerSideProps(
 );
 
 export default Profile;
-//store/configstore 에 사가 등록되어있음.
