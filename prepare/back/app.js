@@ -28,18 +28,24 @@ passportConfig();
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
   app.use(hpp());
-  app.use(helmet());
+  app.use(helmet({ contentSecurityPolicy: false }));
+  app.use(
+    cors({
+      origin: ["http://nodebird.com", "http://54.178.45.151"],
+      credentials: true,
+    })
+  );
 } else {
   app.use(morgan("dev"));
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    })
+  );
 }
-
-app.use(morgan("dev"));
-app.use(
-  cors({
-    origin: ["http://localhost:3060", "http://54.178.45.151"], //* 안된다. 프론트와백엔드간에 민감한 정보를 보내니까. 정확한 주소를 적어달라 에러
-    credentials: true, //쿠키를 같이 전달하고싶으면 true로 만들어주면뎀.
-  })
-);
+//* 안된다. 프론트와백엔드간에 민감한 정보를 보내니까. 정확한 주소를 적어달라 에러
+//쿠키를 같이 전달하고싶으면 true로 만들어주면뎀.
 //밑에서 실행되면 안됨 위에서부터 실행되서 post가 undefind 될수있으니.
 //바로밑에 /images 추가해주면 postform에서도 경로 추가해줘야함.
 app.use("/", express.static(path.join(__dirname, "uploads")));
